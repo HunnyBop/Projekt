@@ -1,0 +1,52 @@
+{% extends "base.html.jinja" %}
+{% block sidebar %}
+       <h2>{{product_id}}!</h2>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Number of opinions
+        <span class="badge bg-warning rounded-pill">{{stats["opinions_count"]}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Number of opinions with pros
+        <span class="badge bg-success rounded-pill">{{stats["pros_count"]}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Number of opinions with cons
+        <span class="badge bg-danger rounded-pill">{{stats["cons_count"]}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        Average score
+        <span class="badge bg-info rounded-pill">{{stats["average_score"]}}</span>
+        </li>
+    </ul>                 
+{% endblock sidebar %}
+{% block content %}
+<div id = "chart"></div>
+    <script>
+    var options = {
+        series: [{{stats["pros_count"]}},{{stats["cons_count"]}}],
+        chart: {
+        width: 380,
+        type: 'pie',
+      },
+      labels: ["pros","cons"],
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }]
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+    
+    </script>
+  {{opinions}}[1]
+  
+{% endblock content %}
